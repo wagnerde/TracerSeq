@@ -12,7 +12,7 @@ TracerSeq was developed and used to analyze zebrafish embryonic development in:
 
 ### Inputs ###
 
-Input sequencing data must be sample demultiplexed such that each FASTQ file corresponds to a single inDrops library. FASTQ formats should match that of the inDrops.py filtered/sorted FASTQ output (see below).  The second line contains the biological read, and the header is formatted as follows: ```@:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:AdditionalInfo```
+Input sequencing data must be sample demultiplexed such that each FASTQ file corresponds to a single inDrops library. FASTQ formats should match that of the inDrops.py filtered/sorted FASTQ output (see below).  The second line contains the biological read, and the header is formatted as follows:    ```@:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:AdditionalInfo```
 
 Example:
 ```
@@ -33,7 +33,7 @@ AAAAA#EEEEEEEEEEEEEEEEEEEEE6EEAEEEE/EAEAEAEEEAEEEEEEAEEAEEAEE
 
 The two main functions have both required and optional inputs. Each function generates outputs text files and plots.
 
-parse_TracerFastQ.m   
+**parse_TracerFastQ.m**
 
 ```
  REQUIRED INPUTS:
@@ -62,7 +62,7 @@ parse_TracerFastQ.m
            column1: inDrops cell barcode 
            column2: TracerSeq barcode sequence
 ```
-parse_TracerClones.m   
+**parse_TracerClones.m**
 
 ```
  REQUIRED INPUTS:
@@ -130,10 +130,37 @@ parse_TracerClones.m
 
 ```
 
-
 ### Running via command line ###
 
+Both functions can be run from the command line.  
 
+**parse_TracerFastQ.m** (run once per FASTQ)
+```
+# specify paths
+matlab_scripts_dir='path_to_matlab_functions'
+working_dir='path_to_output_directory'
+fastq_path='path_to_FASTQ_file'
+
+# define variables
+lib="libname_1"
+thresh_cell=min_reads_per_cell
+thresh_UMI=min_reads_per_UMI
+
+matlab -nodesktop -nodisplay -r "cd('${working_dir}');addpath('${matlab_scripts_dir}');parse_TracerFastQ('${filename}','${lib}','thresh_cell',${thresh_cell},'thresh_UMI',${thresh_UMI})"
+```
+
+**parse_TracerClones.m** (run once per sample)
+```
+# specify paths
+matlab_scripts_dir='path_to_matlab_functions'
+working_dir='path_to_fastq'
+
+# define variables
+library_set="{'libname_1' 'libname_2' 'libname_3' 'libname_4' ... }"
+set_name="lib_set_1"
+
+matlab -nodesktop -nodisplay -r "cd('${working_dir}');addpath('${matlab_scripts_dir}');parse_TracerClones(${library_set},'${set_name}')"
+```
 
 
 
