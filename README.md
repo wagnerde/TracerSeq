@@ -25,12 +25,12 @@ Input sequencing data must be sample demultiplexed such that each FASTQ file cor
 @:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:etc
 
 Example:
-'''
+```
 @CCAGACAG-CACAAGGC:CCAAAT:NS500422_445_H77LWBGX2_1_11101_12233_1072
 GGCATNGATGAGCTCTACAAATAAGAGCCGAAAATAAAGATATAATCATACGTATCCGGAA
 +
 AAAAA#EEEEEEEEEEEEEEEEEEEEE6EEAEEEE/EAEAEAEEEAEEEEEEAEEAEEAEE
-'''
+```
 
 ### Settings ###
 
