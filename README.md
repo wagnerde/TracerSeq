@@ -21,12 +21,16 @@ TracerSeq was developed and used to analyze zebrafish embryonic development in:
 
 ### Inputs ###
 
-Input sequencing data must be sample demultiplexed such that each FASTQ file corresponds to a single inDrops library.  FASTQ formats should match that of the inDrops.py filtered/sorted FASTQ output (see below).  The second line contains the biological read, and the headeris formatted as follows: @:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:etc
+Input sequencing data must be sample demultiplexed such that each FASTQ file corresponds to a single inDrops library.  FASTQ formats should match that of the inDrops.py filtered/sorted FASTQ output (see below).  The second line contains the biological read, and the headeris formatted as follows: 
+@:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:etc
 
+Example:
+'''
 @CCAGACAG-CACAAGGC:CCAAAT:NS500422_445_H77LWBGX2_1_11101_12233_1072
 GGCATNGATGAGCTCTACAAATAAGAGCCGAAAATAAAGATATAATCATACGTATCCGGAA
 +
 AAAAA#EEEEEEEEEEEEEEEEEEEEE6EEAEEEE/EAEAEAEEEAEEEEEEAEEAEEAEE
+'''
 
 ### Settings ###
 
