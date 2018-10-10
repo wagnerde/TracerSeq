@@ -1,9 +1,7 @@
 TracerSeq
 =========
 
-This pipeline facilitates processing of scRNA-seq TracerSeq FASTQ files to produce a TracerClones x Cells counts table.  
-
-These functions require that input FASTQ files have already been demultiplexed by sample (e.g. steps 1-3 of the inDrops.py pipeline). Inputs are expected to match the format of inDrops.py "sorted FASTQ" files.  
+This pipeline facilitates processing of TracerSeq FASTQ files to produce a Tracer Barcodes x inDrops Cell Barcodes counts table.  
 
 This code was written in Matlab (2017a) and requires the 'Statistics and Machine Learning Toolbox'.
 
@@ -12,7 +10,7 @@ TracerSeq was developed and used to analyze zebrafish embryonic development in:
 
 ### Inputs ###
 
-Input sequencing data must be sample demultiplexed such that each FASTQ file corresponds to a single inDrops library. FASTQ formats should match that of the inDrops.py filtered/sorted FASTQ output (see below).  The second line contains the biological read, and the header is formatted as follows:    ```@:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:AdditionalInfo```
+Input sequencing data must be sample-demultiplexed such that each FASTQ file corresponds to a single inDrops library (e.g. steps 1-3 of the inDrops.py pipeline). FASTQ formats should match that of the inDrops.py filtered/sorted FASTQ output (see below). The second line contains the biological read, and the header is formatted as follows:    ```@:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:AdditionalInfo```
 
 Example:
 ```
@@ -24,14 +22,14 @@ AAAAA#EEEEEEEEEEEEEEEEEEEEE6EEAEEEE/EAEAEAEEEAEEEEEEAEEAEEAEE
 
 ### Usage ###
 
-1. First run the parse_TracerFastQ.m function to process raw FASTQ files. This function will filter abundant inDrops cell barcodes and UMIs, perform UMI error-validation, and then determine a consensus sequence for each unique TracerSeq barcode detected in each cell. Consensus sequences for each barcode are then writted to a csv file each tagged with its associated inDrops cell barcode.
-2. Next run the parse_TracerClones.m function to perform TracerSeq barcode correction, assign barcodes to clones, and save a TracerSeq Clones x Cells counts table.  In this final table, each TracerSeq mRNA is a row with the following columns:
+1. First run the parse_TracerFastQ.m function to process raw FASTQ files. This function will filter abundant inDrops cell barcodes and UMIs, perform UMI error-validation, and then determine a consensus sequence for each unique TracerSeq barcode detected in each cell. Consensus sequences for each barcode are then writted to a csv file, each tagged with its associated inDrops cell barcode.
+2. Next run the parse_TracerClones.m function to perform TracerSeq barcode correction, assign barcodes to clones, and save a TracerSeq Barcodes x Cell Barcodes counts table.  In this final table, each original TracerSeq mRNA is a row with the following columns:
 	column1: inDrops cell barcode 
 	column2: TracerSeq clone # assignment
-	column3: TracerSeq barcode sequence (corrected)
+	column3: TracerSeq barcode sequence (error-corrected)
 	column4: UMI counts
 
-The two main functions have both required and optional inputs. Each function generates outputs text files and plots.
+The two functions have both required and optional inputs. Each function writes output text files and diagnostic plots to the working directory.
 
 **parse_TracerFastQ.m**
 
@@ -132,34 +130,14 @@ The two main functions have both required and optional inputs. Each function gen
 
 ### Running via command line ###
 
-Both functions can be run from the command line.  
-
-**parse_TracerFastQ.m** (run once per FASTQ)
+**parse_TracerFastQ.m** (run once per FASTQ file)
 ```
-# specify paths
-matlab_scripts_dir='path_to_matlab_functions'
-working_dir='path_to_output_directory'
-fastq_path='path_to_FASTQ_file'
-
-# define variables
-lib="libname_1"
-thresh_cell=min_reads_per_cell
-thresh_UMI=min_reads_per_UMI
-
-matlab -nodesktop -nodisplay -r "cd('${working_dir}');addpath('${matlab_scripts_dir}');parse_TracerFastQ('${filename}','${lib}','thresh_cell',${thresh_cell},'thresh_UMI',${thresh_UMI})"
+matlab -nodesktop -nodisplay -r "parse_TracerFastQ('/full_path_to.fastq','library_name_,'thresh_cell',min_reads_per_cell,'thresh_UMI',min_reads_per_UMI)"
 ```
 
-**parse_TracerClones.m** (run once per sample)
+**parse_TracerClones.m** (run once per sample, if necessary merge multiple libraries)
 ```
-# specify paths
-matlab_scripts_dir='path_to_matlab_functions'
-working_dir='path_to_fastq'
-
-# define variables
-library_set="{'libname_1' 'libname_2' 'libname_3' 'libname_4' ... }"
-set_name="lib_set_1"
-
-matlab -nodesktop -nodisplay -r "cd('${working_dir}');addpath('${matlab_scripts_dir}');parse_TracerClones(${library_set},'${set_name}')"
+matlab -nodesktop -nodisplay -r "parse_TracerClones("{'libname_1' 'libname_2' 'libname_3' ... }",'sample_name')"
 ```
 
 
