@@ -23,7 +23,11 @@ AAAAA#EEEEEEEEEEEEEEEEEEEEE6EEAEEEE/EAEAEAEEEAEEEEEEAEEAEEAEE
 ### Usage ###
 
 1. First run **parse_TracerFastQ.m** to process raw FASTQ files. This function will filter abundant inDrops cell barcodes and UMIs, perform UMI error-validation, and then determine a consensus sequence for each unique TracerSeq barcode detected in each cell. Consensus sequences for each barcode are then writted to a csv file, each tagged with its associated inDrops cell barcode.
-2. Next run **parse_TracerClones.m** to perform TracerSeq barcode correction, assign barcodes to clones, and save a TracerSeq Barcodes x Cell Barcodes counts table.  In this final table, each original TracerSeq mRNA is a row with the following columns:   column1: inDrops cell barcode   column2: TracerSeq clone # assignment   column3: TracerSeq barcode sequence (error-corrected)   column4: UMI counts   
+2. Next run **parse_TracerClones.m** to perform TracerSeq barcode correction, assign barcodes to clones, and save a TracerSeq Barcodes x Cell Barcodes counts table.  In this final table, each original TracerSeq mRNA is a row with the following columns:   
+column1: inDrops cell barcode   
+column2: TracerSeq clone # assignment   
+column3: TracerSeq barcode sequence (error-corrected)   
+column4: UMI counts   
    
 The two functions have both required and optional inputs. Each function writes output text files and diagnostic plots to the working directory.
 
