@@ -1,7 +1,7 @@
 TracerSeq
 =========
 
-This pipeline facilitates processing of TracerSeq FASTQ files to produce a Tracer Barcodes x inDrops Cell Barcodes counts table.  
+This pipeline facilitates processing of TracerSeq FASTQ files to produce a Tracer Barcodes x inDrops Cell Barcodes counts table.  Cell barcodes can be used to cross reference TracerSeq data to associated transcriptome data for the same cells.
 
 This code was written in Matlab (2017a) and requires the 'Statistics and Machine Learning Toolbox'.  The [strdist](https://www.mathworks.com/matlabcentral/fileexchange/17585-calculation-of-distance-between-strings?focused=5094987&tab=function) function (Eduard Polityko) is used to calculate 'edit' distances between nucleotide barcode sequences. 
 
