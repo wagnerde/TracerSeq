@@ -3,7 +3,7 @@ TracerSeq
 
 This pipeline facilitates processing of TracerSeq FASTQ files to produce a Tracer Barcodes x inDrops Cell Barcodes counts table.  
 
-This code was written in Matlab (2017a) and requires the 'Statistics and Machine Learning Toolbox'.  The function [strdist](https://www.mathworks.com/matlabcentral/fileexchange/17585-calculation-of-distance-between-strings?focused=5094987&tab=function) (Eduard Polityko) is used to calculate 'edit' distances between nucleotide barcode sequences. 
+This code was written in Matlab (2017a) and requires the 'Statistics and Machine Learning Toolbox'.  The [strdist](https://www.mathworks.com/matlabcentral/fileexchange/17585-calculation-of-distance-between-strings?focused=5094987&tab=function) function (Eduard Polityko) is used to calculate 'edit' distances between nucleotide barcode sequences. 
 
 TracerSeq was developed and used to analyze zebrafish embryonic development in:  
 **Single-cell mapping of gene expression landscapes and lineage in the zebrafish embryo.**  Wagner DE, Weinreb C, Collins ZM, Briggs JA, Megason SG, Klein AM. Science 26 Apr 2018. [doi:10.1126/science.aar4362](http://science.sciencemag.org/content/early/2018/04/25/science.aar4362)
