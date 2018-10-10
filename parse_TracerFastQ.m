@@ -40,7 +40,6 @@ function parse_TracerFastQ(filename, libname, varargin)
 %           Table of identified barcodes, each TracerSeq mRNA is a row
 %           column1: inDrops cell barcode 
 %           column2: TracerSeq barcode sequence
-%           column3: UMI counts
 
 
 %% PARAMETER SETTINGS
