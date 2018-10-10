@@ -34,6 +34,8 @@ The two functions have both required and optional inputs. Each function writes o
 **parse_TracerFastQ.m**
 
 ```
+ Usage: parse_TracerFastQ(filename, libname, varargin)
+
  REQUIRED INPUTS:
  filename      Full path to an inDrops.py sorted FASTQ file
  libname       String identifier for this library
@@ -63,6 +65,8 @@ The two functions have both required and optional inputs. Each function writes o
 **parse_TracerClones.m**
 
 ```
+ Usage: parse_TracerClones(library_set, set_name, varargin)
+
  REQUIRED INPUTS:
  library_set      Cell array of libnames to be processed; each libname
                   corresponds to a 'libname'_tracerSeqs.csv file
@@ -137,7 +141,7 @@ matlab -nodesktop -nodisplay -r "parse_TracerFastQ('/full_path_to.fastq','librar
 
 **parse_TracerClones.m** (run once per sample, if necessary merge multiple libraries)
 ```
-matlab -nodesktop -nodisplay -r "parse_TracerClones("{'libname_1' 'libname_2' 'libname_3' ... }",'sample_name')"
+matlab -nodesktop -nodisplay -r "parse_TracerClones("{'libname_1' 'libname_2' 'libname_3' ... }",'set_name')"
 ```
 
 
