@@ -132,7 +132,7 @@ The two functions have both required and optional inputs. Each function writes o
 
 **parse_TracerFastQ.m** (run once per FASTQ file)
 ```
-matlab -nodesktop -nodisplay -r "parse_TracerFastQ('/full_path_to.fastq','library_name_,'thresh_cell',min_reads_per_cell,'thresh_UMI',min_reads_per_UMI)"
+matlab -nodesktop -nodisplay -r "parse_TracerFastQ('/full_path_to.fastq','library_name','thresh_cell',min_reads_per_cell,'thresh_UMI',min_reads_per_UMI)"
 ```
 
 **parse_TracerClones.m** (run once per sample, if necessary merge multiple libraries)
