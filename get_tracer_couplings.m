@@ -1,11 +1,21 @@
 function  Couplings = get_tracer_couplings(DataSet, ClusterNames, varargin)
 %% Usage: Couplings = get_tracer_couplings(DataSet, ClusterNames, varargin)
 % 
-% This function
-% 
-% Couplings are based on a z-score vs random trials (cell state assignments 
-% are shuffled across all cells from all datasets).
-%
+% This function performs the following operations:
+% (1) Load and concatenate Tracer counts matrices from all 'DataSet'
+%     entries and merged clusterIDs.
+% (2) Perform UMI, cell, and clone filtering according to user thresholds.
+% (3) Calculate lineage couplings between all pairs of annotated
+%     clusters/states. Raw couplings are defined as the total number of
+%     independent TracerSeq clones that 'hit' both state j and state k, for 
+%     all pairs of states.  
+% (4) An ensemble of couplings are then similarly calculated for randomized 
+%     data.
+% (5) Z-scores are calculated as: 
+%     (Coupling - Mean(Random Couplings) / StDev(Random Couplings))
+% (6) Correlations of Z-scores are calculated.
+% (7) Hierarchical clustering is performed on both sets of scores, and
+%     plotted as a heatmap.
 %
 % REQUIRED INPUTS:
 % 'DataSet'
@@ -28,14 +38,13 @@ function  Couplings = get_tracer_couplings(DataSet, ClusterNames, varargin)
 %               each column in the merged TracerSeq counts matrix
 %
 % 'ClusterNames'
-%       A table consisting of the following two columns, used to decode
-%       clusterID assignments into cluster names:       
+%       A table containing the following two columns, used to decode
+%       cluster/stateID assignments into descriptive names:       
 %       ClusterNames.ClusterID
-%               A unique integer for each clusterID assignment in the
-%               transcriptome data analysis
+%               A unique integer for each cluster/state ID annotation.
 %
 %       ClusterNames.ClusterName
-%               Short names/descriptions corresponding to each clusterID.
+%               Short descriptions corresponding to each cluster/state ID.
 % 
 % Optional input name/value pairs: 
 % 'thresh_UMI'
