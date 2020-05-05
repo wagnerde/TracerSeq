@@ -166,7 +166,7 @@ Parameter settings for 'get_tracer_couplings' are specified using optional name/
  
  'thresh_min_cells_per_clone
        Discard any Tracer clones with fewer than this number of cells 
-       (default=2)
+       (default=5)
 
  'thresh_max_cells_per_clone'
        Discard any Tracer clones with greater than this number of cells 
@@ -175,12 +175,12 @@ Parameter settings for 'get_tracer_couplings' are specified using optional name/
  'thresh_min_cells_per_hit'
        Minimum number of positive cells required for a given TracerClone
        to be considered as 'hitting' a given state
-       (default=1)
+       (default=2)
 
  'nRandTrials' 
        Number of data permutations used to generate mean and st. dev
        expectations
-       (default=100)
+       (default=1000)
 
  'heatmap_distance_metric'
        Distance metric argument passed to 'linkage' for generating final
@@ -192,5 +192,4 @@ Parameter settings for 'get_tracer_couplings' are specified using optional name/
        (default='average')
 
 ```
-## Run TRACERSEQ ##  
 
