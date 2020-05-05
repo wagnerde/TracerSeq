@@ -148,7 +148,12 @@ matlab -nodesktop -nodisplay -r "parse_TracerClones("{'libname_1' 'libname_2' 'l
 
 ## Calculate State-Lineage Couplings ##
 
-We provide a script: "script_runTRACERSEQ_Wagner2018.m" for running an example analysis pipeline. This pipeline contains initial steps for downloading pre-processed
+We provide an example analysis pipeline: 'script_runTRACERSEQ_Wagner2018.m'.  Run by typing the following into the Matlab command line:     
+  ```
+  run('script_runTRACERSEQ_Wagner2018.m')
+  ```
+
+This pipeline contains initial steps for downloading pre-processed
 single-cell transcriptome annotations and CellTracerCounts.csv files from NCBI-GEO. CellTracerCounts files can also be generated locally from FASTQ files, as described above.  These data are then loaded into a 'DataSet' structure array with multiple fields in which each record corresponds to a biological sample (e.g. 'TracerSeq embryo 1'). The pipeline next merges Tracer counts with transcriptome annotations for individual inDrops cell barcodes by calling 'merge_tracer_data'. Finally, state-lineage couplings are calculated and plotted as a heatmap by calling 'get_tracer_couplings'.
 
 Parameter settings for 'get_tracer_couplings' are specified using optional name/value pairs. Default behavior implements settings used in [Wagner et. al. 2018](http://science.sciencemag.org/content/early/2018/04/25/science.aar4362).
@@ -189,7 +194,3 @@ Parameter settings for 'get_tracer_couplings' are specified using optional name/
 ```
 ## Run TRACERSEQ ##  
 
-Run the script by typing the following into the Matlab command line:     
-  ```
-  run('script_runTRACERSEQ_Wagner2018.m')
-  ```
