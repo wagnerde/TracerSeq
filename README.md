@@ -148,7 +148,7 @@ matlab -nodesktop -nodisplay -r "parse_TracerClones("{'libname_1' 'libname_2' 'l
 
 ## Calculate State-Lineage Couplings ##
 
-We provide an example analysis pipeline: 'script_runTRACERSEQ_Wagner2018.m'.  Run by typing the following into the Matlab command line:     
+We provide an example analysis pipeline: 'script_runTRACERSEQ_Wagner2018.m'. Execute it by typing the following into the Matlab command line:     
   ```
   run('script_runTRACERSEQ_Wagner2018.m')
   ```
