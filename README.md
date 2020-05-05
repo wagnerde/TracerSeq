@@ -1,16 +1,18 @@
 TracerSeq
 =========
 
-This pipeline facilitates processing of TracerSeq FASTQ files to produce a Tracer Barcodes x inDrops Cell Barcodes counts table.  Cell barcodes can be used to cross reference TracerSeq data to associated transcriptome data for the same cells.
+This pipeline facilitates processing of TracerSeq FASTQ files to produce a Tracer Barcodes x inDrops Cell Barcodes counts table.  Cell barcodes can then be used to cross reference TracerSeq data to accompanying transcriptome data for the same cells. As an example, we demonstrate how TracerSeq can be combined with transcriptome-derived cluster annotations to reveal state-lineage relationships.
 
 This code was written in Matlab (2017a) and requires the 'Statistics and Machine Learning Toolbox'.  The [strdist](https://www.mathworks.com/matlabcentral/fileexchange/17585-calculation-of-distance-between-strings?focused=5094987&tab=function) function (Eduard Polityko) is used to calculate 'edit' distances between nucleotide barcode sequences. 
 
 TracerSeq was developed and used to analyze zebrafish embryonic development in:  
 **Single-cell mapping of gene expression landscapes and lineage in the zebrafish embryo.**  Wagner DE, Weinreb C, Collins ZM, Briggs JA, Megason SG, Klein AM. Science 26 Apr 2018. [doi:10.1126/science.aar4362](http://science.sciencemag.org/content/early/2018/04/25/science.aar4362)
 
-### Inputs ###
 
-Input sequencing data must be sample-demultiplexed such that each FASTQ file corresponds to a single inDrops library (e.g. steps 1-3 of the [inDrops.py](https://github.com/indrops/indrops) pipeline). FASTQ formats should match that of the inDrops.py filtered/sorted FASTQ output (see below). The second line contains the biological read, and the header is formatted as follows:    ```@:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:AdditionalInfo```
+## Preprocessing ##
+
+### FASTQ File Format ###
+Input sequencing data must first be sample-demultiplexed such that each FASTQ file corresponds to a single inDrops library (e.g. steps 1-3 of the [inDrops.py](https://github.com/indrops/indrops) pipeline). FASTQ formats should match that of the inDrops.py filtered/sorted FASTQ output (see below). The second line contains the biological read, and the header is formatted as follows:    ```@:inDropsCellBarcodePart1-inDropsCellBarcodePart2:UMI:AdditionalInfo```
 
 Example:
 ```
@@ -20,8 +22,7 @@ GGCATNGATGAGCTCTACAAATAAGAGCCGAAAATAAAGATATAATCATACGTATCCGGAA
 AAAAA#EEEEEEEEEEEEEEEEEEEEE6EEAEEEE/EAEAEAEEEAEEEEEEAEEAEEAEE
 ```
 
-### Usage ###
-
+### Parsing FASTQ Files ###
 1. First run **parse_TracerFastQ.m** to process raw FASTQ files. This function will filter abundant inDrops cell barcodes and UMIs, perform UMI error-validation, and then determine a consensus sequence for each unique TracerSeq barcode detected in each cell. Consensus sequences for each barcode are then writted to a csv file, each tagged with its associated inDrops cell barcode.
 2. Next run **parse_TracerClones.m** to perform TracerSeq barcode correction, assign barcodes to clones, and save a TracerSeq Barcodes x Cell Barcodes counts table.  In this final table, each original TracerSeq mRNA is a row with the following fields:   
   column1: inDrops cell barcode   
@@ -132,7 +133,7 @@ The two functions have both required and optional inputs. Each function writes o
 
 ```
 
-### Running via command line ###
+### Preprocess via command line ###
 
 **parse_TracerFastQ.m** (run once per FASTQ file)
 ```
@@ -144,11 +145,50 @@ matlab -nodesktop -nodisplay -r "parse_TracerFastQ('/full_path_to.fastq','librar
 matlab -nodesktop -nodisplay -r "parse_TracerClones("{'libname_1' 'libname_2' 'libname_3' ... }",'set_name')"
 ```
 
+## Calculate State-Lineage Couplings ##
 
+We provide a script: "script_runTRACERSEQ_Wagner2018.m" for running an example analysis pipeline. This pipeline contains initial steps for downloading pre-processed
+single-cell transcriptome annotations and CellTracerCounts.csv files from NCBI-GEO. CellTracerCounts files can also be generated locally from FASTQ files, as described above.  These data are then loaded into a 'DataSet' structure array with multiple fields in which each record corresponds to a biological sample (e.g. 'TracerSeq embryo 1'). The pipeline next merges Tracer counts with transcriptome annotations for individual inDrops cell barcodes by calling 'merge_tracer_data'. Finally, state-lineage couplings are calculated and plotted as a heatmap by calling 'get_tracer_couplings'.
 
+Parameter settings for 'get_tracer_couplings' are specified using optional name/value pairs. Default behavior implements settings used in [Wagner et. al. 2018](http://science.sciencemag.org/content/early/2018/04/25/science.aar4362).
 
+```
+ 'thresh_UMI'
+       Minimum number of UMI counts required to call an individual cell as
+       'positive' for a given Tracer clone
+       (default=1)
+ 
+ 'thresh_min_cells_per_clone
+       Discard any Tracer clones with fewer than this number of cells 
+       (default=2)
 
+ 'thresh_max_cells_per_clone'
+       Discard any Tracer clones with greater than this number of cells 
+       (default=Inf)
 
+ 'thresh_min_cells_per_hit'
+       Minimum number of positive cells required for a given TracerClone
+       to be considered as 'hitting' a given state
+       (default=1)
 
+ 'nRandTrials' 
+       Number of data permutations used to generate mean and st. dev
+       expectations
+       (default=100)
 
+ 'heatmap_distance_metric'
+       Distance metric argument passed to 'linkage' for generating final
+       clustered heatmap
+       (default='correlation')
+ 
+ 'heatmap_linkage_method'
+       Method passed to 'linkage' for generating final clustered heatmap
+       (default='average')
 
+```
+## Run TRACERSEQ ##  
+
+Run the script by typing the following into the Matlab command line:     
+  ```
+  run('script_runTRACERSEQ_Wagner2018.m')
+  ```
